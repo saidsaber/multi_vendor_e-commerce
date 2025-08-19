@@ -34,8 +34,8 @@ Route::get('/cart', function () {
 })->name('cart');
 
 Route::get('/product/{id}', function ($id) {
-    $product = Product_Detail::with('size' , 'color' , 'images' , 'product' , 'product.colors' , 'product.sizes')->where('id', $id)->first();
-    return view('product', ['product' => $product]);
+    // $product = Product_Detail::with( 'size' , 'color' , 'images' , 'product' , 'product.colors' , 'product.sizes')->where('id', $id)->first();
+    return view('product', ['id' => $id]);
 })->name('product');
 
 Route::post('/login', [UserController::class, 'login'])->name('post.login');

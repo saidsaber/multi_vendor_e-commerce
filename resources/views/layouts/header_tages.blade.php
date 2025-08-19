@@ -41,6 +41,9 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+
+    @livewireStyles
+
 </head>
 
 <body>
@@ -542,6 +545,9 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+
+    {{-- livewire --}}
+    @livewireScripts
 
     {{-- ____________________________________ --}}
 </body>

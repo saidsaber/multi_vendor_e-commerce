@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Product_Detail extends Model
 {
@@ -26,5 +27,13 @@ class Product_Detail extends Model
     public function images()
     {
         return $this->hasMany(Image::class, 'product_detail_id');
+    }
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'product_detail_id');
+    }
+    public function cartForUser()
+    {
+        return $this->hasOne(Cart::class, 'product_detail_id')->where('user_id', Auth::id());
     }
 }
