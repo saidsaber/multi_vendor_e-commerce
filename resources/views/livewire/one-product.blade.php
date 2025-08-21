@@ -86,33 +86,38 @@
 
 
                                 {{-- Colors --}}
-                                <div class="details-filter-row details-row-size">
-                                    <label>Color:</label>
-                                    <div class="product-nav product-nav-thumbs">
-                                        @foreach ($product->product->colors as $color)
-                                            <label class="product-nav-item" style="cursor:pointer;">
-                                                <input type="radio" name="color_id" value="{{ $color->id }}"
-                                                    class="d-none" wire:model="color" wire:change="change()">
-                                                <span class="color-circle" style="background:{{ $color->hex_code }};">
-                                                </span>
-                                            </label>
-                                        @endforeach
+                                @if ($product->color)
+                                    <div class="details-filter-row details-row-size">
+                                        <label>Color:</label>
+                                        <div class="product-nav product-nav-thumbs">
+                                            @foreach ($product->product->colors as $color)
+                                                <label class="product-nav-item" style="cursor:pointer;">
+                                                    <input type="radio" name="color_id" value="{{ $color->id }}"
+                                                        class="d-none" wire:model="color" wire:change="change()">
+                                                    <span class="color-circle"
+                                                        style="background:{{ $color->hex_code }};">
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 {{-- Sizes --}}
-                                <div class="details-filter-row details-row-size">
-                                    <label>Size:</label>
-                                    <div class="product-nav product-nav-thumbs">
-                                        @foreach ($product->product->sizes as $size)
-                                            <label class="product-nav-item size-label">
-                                                <input type="radio" name="size_id" value="{{ $size->id }}"
-                                                    class="d-none" wire:model="size" wire:change="change()">
-                                                <span class="size-box">{{ $size->name }}</span>
-                                            </label>
-                                        @endforeach
+                                @if ($product->size)
+                                    <div class="details-filter-row details-row-size">
+                                        <label>Size:</label>
+                                        <div class="product-nav product-nav-thumbs">
+                                            @foreach ($product->product->sizes as $size)
+                                                <label class="product-nav-item size-label">
+                                                    <input type="radio" name="size_id" value="{{ $size->id }}"
+                                                        class="d-none" wire:model="size" wire:change="change()">
+                                                    <span class="size-box">{{ $size->name }}</span>
+                                                </label>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 @if (!isset($product->cartForUser))
                                     <form wire:submit.prevent="addToCart">
                                         {{-- Quantity --}}

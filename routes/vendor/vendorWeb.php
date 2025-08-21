@@ -14,7 +14,7 @@ Route::post('create/store', [StoreController::class, 'create'])->name('vendor.cr
 Route::get('create/store', [StoreController::class, 'index'])->middleware('auth');
 
 Route::get('/login', function () {
-    return view('login' , ['role' => 'vendor']);
+    return view('login', ['role' => 'vendor']);
 })->name('vendor.login');
 
 Route::post('/login', [UserController::class, 'login'])->name('post.vendor.login');
@@ -25,10 +25,10 @@ Route::middleware(IsVendorMiddleWare::class)->group(function () {
         return view('vendor.main');
     })->name('vendor');
 
-    Route::get('/products', [ProductController::class , 'index'])->name('vendor.product');
+    Route::get('/products', [ProductController::class, 'index'])->name('vendor.product');
 
-    Route::get('/product/details/{id}' , function($id){
-        return view('vendor.productDetails' , ['id' => $id]);
+    Route::get('/product/details/{id}', function ($id) {
+        return view('vendor.productDetails', ['id' => $id]);
     })->name('vendor.product.details');
 
     // Route::get('product/details' , ProductDetails::class);
@@ -40,6 +40,6 @@ Route::middleware(IsVendorMiddleWare::class)->group(function () {
         return view('vendor.createproduct');
     })->name('vendor.create.product');
 
-    Route::get('/vendor/logout' , [UserController::class , 'logout'])->name('vendor.logout');
+    Route::get('/vendor/logout', [UserController::class, 'logout'])->name('vendor.logout');
     Route::post('/create_product', [CreateProductController::class, 'createProduct'])->name('vendor.post.create.product');
 });

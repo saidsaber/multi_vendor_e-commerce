@@ -14,8 +14,8 @@ class FormDetails extends Component
 {
     use WithFileUploads;
 
-    public $size;
-    public $color;
+    public $size = null;
+    public $color = null;
     public $stock;
     public $price;
     public $image;
@@ -26,9 +26,16 @@ class FormDetails extends Component
 
     public function saveProductDetails()
     {
+        $colorValidation = Color::where('product_id', $this->id)->exists()
+            ? 'required|'
+            : 'nullable|';
+
+        $sizeValidation = Size::where('product_id', $this->id)->exists()
+            ? 'required|'
+            : 'nullable|';
         $this->validate([
-            'color' => 'required|exists:colors,id',
-            'size'  => 'required|exists:sizes,id',
+            'color' => $colorValidation . 'exists:colors,id',
+            'size'  => $sizeValidation . 'exists:sizes,id',
             'price'    => 'required|numeric|min:0',
             'stock'    => 'required|integer|min:0',
             'image'    => 'required|image|max:10240', // 10MB

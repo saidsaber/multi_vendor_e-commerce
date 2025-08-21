@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('color_id')->constrained();
-            $table->foreignId('size_id')->constrained();
+            $table->foreignId('color_id')->nullable()->constrained();
+            $table->foreignId('size_id')->nullable()->constrained();
             $table->string('price');
             $table->integer('stock');
             $table->enum('status', ['available', 'unavailable'])->default('available');

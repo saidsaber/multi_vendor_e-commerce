@@ -106,7 +106,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (isset($products))
+                                            @if (!empty($products))
                                                 @foreach ($products as $product)
                                                     {{-- @dd(isset($product->product_details[0]->id)) --}}
                                                     <tr class="row-danger">

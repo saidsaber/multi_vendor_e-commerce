@@ -24,8 +24,8 @@ class CreateProduct extends Component
         'productName' => 'required|string|max:255',
         'description' => 'required|string|max:500',
         'category' => 'required|exists:categories,id',
-        'size'        => 'required|string',
-        'color'       => 'required|string',
+        'size'        => 'string',
+        'color'       => 'string',
     ];
     public $step = 1;
 
@@ -42,16 +42,16 @@ class CreateProduct extends Component
 
     public function sizeStep()
     {
-        $this->validate([
-            'size'        => 'required|string',
-        ]);
+        // $this->validate([
+        //     'size'        => 'string',
+        // ]);
         $this->step++;
     }
     public function save()
     {
-        $this->validate([
-            'color'       => 'required|string',
-        ]);
+        // $this->validate([
+        //     'color'       => 'string',
+        // ]);
         // _____________________Create Product____________________________
         $product = Product::create([
             'name' => $this->productName,
@@ -60,19 +60,23 @@ class CreateProduct extends Component
             'store_id' => Auth::guard('vendor')->user()->stores[0]['id']
         ]);
         // _____________________Create Sizes____________________________
-        $sizeArray = explode(',', $this->size);
-        foreach ($sizeArray as $size) {
-            Size::create(['name' => $size, 'product_id' => $product->id]);
+        if (!empty($this->size)) {
+            $sizeArray = explode(',', $this->size);
+            foreach ($sizeArray as $size) {
+                Size::create(['name' => $size, 'product_id' => $product->id]);
+            }
         }
         // _____________________Create Colors____________________________
-        $colors = explode(',', $this->color);
-        $hex_colors = explode(',', $this->hex_color);
-        $data = [];
-        for ($i = 0; $i < count($colors); $i++) {
-            $data[$i] = ['color' => $colors[$i], 'hex_code' => $hex_colors[$i], 'product_id' => $product->id];
-        }
-        foreach ($data as $d) {
-            Color::create($d);
+        if (!empty($this->color)) {
+            $colors = explode(',', $this->color);
+            $hex_colors = explode(',', $this->hex_color);
+            $data = [];
+            for ($i = 0; $i < count($colors); $i++) {
+                $data[$i] = ['color' => $colors[$i], 'hex_code' => $hex_colors[$i], 'product_id' => $product->id];
+            }
+            foreach ($data as $d) {
+                Color::create($d);
+            }
         }
         $this->step = 1;
     }

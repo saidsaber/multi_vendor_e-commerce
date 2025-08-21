@@ -16,13 +16,17 @@
         <tbody>
             {{-- @dd($products) --}}
             @if (isset($products))
-            {{-- @dd($products) --}}
+                {{-- @dd($products) --}}
                 @foreach ($products as $product)
                     <tr class="row-danger">
-                        <td><img src="{{ asset('storage/'.$product->images[0]->path) }}" alt=""></td>
+                        <td><img src="{{ asset('storage/' . $product->images[0]->path) }}" alt=""></td>
                         <td>{{ $product->product->name }}</td>
-                        <td>{{ $product->size->name }}</td>
-                        <td>{{ $product->color->color }}</td>
+                        <td>
+                            {{ $product->size == null ? 'null' : $product->size->name}}
+                        </td>
+                        <td>
+                            {{ $product->color == null ? 'null' : $product->color->color}}
+                        </td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->stock }}</td>
                         <td>{{ $product->status }}</td>
