@@ -7,6 +7,9 @@ use App\Http\Controllers\Api\UserController;
 Route::prefix('admin')->group(function () {
     require __DIR__ . '/admin/adminApi.php';
 });
+Route::prefix('vendor')->group(function () {
+    require __DIR__ . '/vendor/vendorApi.php';
+});
 
 Route::post('/auth/register' , [UserController::class , 'register']);
 Route::post('/auth/login' , [UserController::class , 'login']);
