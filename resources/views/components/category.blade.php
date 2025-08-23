@@ -30,7 +30,7 @@
             @if (!empty($categories))
                 @foreach ($categories as $category)
                     <div class="swiper-slide">
-                        <a href="category.html" class="cat-block text-center">
+                        <a href="{{ route('category.products' , $category->id) }}" class="cat-block text-center">
                             <figure>
                                 <span>
                                     <img src="{{ asset('storage/' . $category->image) }}" class="img-fluid" alt="">

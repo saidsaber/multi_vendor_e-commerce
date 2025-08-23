@@ -1,5 +1,5 @@
 @extends('layouts.header_tages')
-@section('activCart' , 'megamenu-container active')
+@section('activCart', 'megamenu-container active')
 @section('data')
     <x-header />
     <main>
@@ -12,6 +12,11 @@
         <div class="page-content">
             <div class="cart">
                 <div class="container">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     @livewire('cart')
                 </div><!-- End .container -->
             </div><!-- End .cart -->

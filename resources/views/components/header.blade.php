@@ -1,3 +1,4 @@
+@props(['categories'])
 <header class="header header-intro-clearance header-4">
     <div class="header-top">
         <div class="container">
@@ -42,7 +43,8 @@
                 </button>
 
                 <a href="index.html" class="logo">
-                    <img src="{{ asset('assets/images/demos/demo-4/logo.png') }}" alt="Molla Logo" width="105" height="25">
+                    <img src="{{ asset('assets/images/demos/demo-4/logo.png') }}" alt="Molla Logo" width="105"
+                        height="25">
                 </a>
             </div><!-- End .header-left -->
 
@@ -72,8 +74,7 @@
                 </div><!-- End .compare-dropdown -->
 
                 <div class="dropdown cart-dropdown">
-                    <a href="{{ route('cart') }}" class="dropdown-toggle"  
-                        aria-expanded="false" data-display="static">
+                    <a href="{{ route('cart') }}" class="dropdown-toggle" aria-expanded="false" data-display="static">
                         <div class="icon">
                             <i class="icon-shopping-cart"></i>
                             <span class="cart-count">2</span>
@@ -145,33 +146,26 @@
 
     <div class="header-bottom sticky-header">
         <div class="container">
-            <div class="header-left">
-                <div class="dropdown category-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
-                        Browse Categories <i class="icon-angle-down"></i>
-                    </a>
+            @if (!empty($categories))
+                <div class="header-left">
+                    <div class="dropdown category-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+                            Browse Categories <i class="icon-angle-down"></i>
+                        </a>
 
-                    <div class="dropdown-menu">
-                        <nav class="side-nav">
-                            <ul class="menu-vertical sf-arrows">
-                                <li class="item-lead"><a href="#">Daily offers</a></li>
-                                <li class="item-lead"><a href="#">Gift Ideas</a></li>
-                                <li><a href="#">Beds</a></li>
-                                <li><a href="#">Lighting</a></li>
-                                <li><a href="#">Sofas & Sleeper sofas</a></li>
-                                <li><a href="#">Storage</a></li>
-                                <li><a href="#">Armchairs & Chaises</a></li>
-                                <li><a href="#">Decoration </a></li>
-                                <li><a href="#">Kitchen Cabinets</a></li>
-                                <li><a href="#">Coffee & Tables</a></li>
-                                <li><a href="#">Outdoor Furniture </a></li>
-                            </ul><!-- End .menu-vertical -->
-                        </nav><!-- End .side-nav -->
-                    </div><!-- End .dropdown-menu -->
-                </div><!-- End .category-dropdown -->
-            </div><!-- End .header-left -->
-
+                        <div class="dropdown-menu">
+                            <nav class="side-nav">
+                                @foreach ($categories as $category)
+                                    <ul class="menu-vertical sf-arrows">
+                                        <li><a href="{{ route('category.products' , $category->id) }}">{{ $category->name }}</a></li>
+                                    </ul><!-- End .menu-vertical -->
+                                @endforeach
+                            </nav><!-- End .side-nav -->
+                        </div><!-- End .dropdown-menu -->
+                    </div><!-- End .category-dropdown -->
+                </div><!-- End .header-left -->
+            @endif
             <div class="header-center">
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">

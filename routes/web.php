@@ -17,6 +17,13 @@ Route::prefix('vendor')->group(function () {
 
 Route::get('/', HomePageController::class)->name('home');
 
+Route::get('/category/{id}', function ($id) {
+    $data = [
+        'categories' => [],
+        'products' => Product::with('product_details', 'product_details.size', 'product_details.color', 'product_details.images', 'category', 'colors')->where('category_id', $id)->whereHas('product_details')->get()
+    ];
+    return view('index', ['data' => $data]);
+})->name('category.products');
 Route::get('/login', function () {
     return view('login', ['role' => 'web']);
 })->name('login');
@@ -43,4 +50,4 @@ Route::post('/register', [UserController::class, 'register'])->name('post.regist
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/checkout', [CheckOutController::class, 'checkout'])->middleware('auth:sanctum')->name('checkout');
 Route::get('/checkout/success', [CheckOutController::class, 'success'])->middleware('auth:sanctum')->name('checkout.success');
-Route::get('/checkout/cancell', [CheckOutController::class, 'cancell'])->middleware('auth:sanctum')->name('checkout.cancel');
+Route::get('/checkout/cancel', [CheckOutController::class, 'cancel'])->middleware('auth:sanctum')->name('checkout.cancel');

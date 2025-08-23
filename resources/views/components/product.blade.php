@@ -29,8 +29,8 @@
                                 </div><!-- End .product-action -->
 
                                 <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add
-                                            to cart</span></a>
+                                    {{-- <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add
+                                            to cart</span></a> --}}
                                     <a href="{{ route('product', ['id' => $product->product_details[0]->id]) }}"
                                         class="btn-product btn" title="Quick view"><span>quick view</span></a>
                                 </div><!-- End .product-action -->
@@ -38,9 +38,9 @@
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#">{{ $product->category->name }}</a>
+                                    <a href="{{ route('category.products' , $product->category->id) }}">{{ $product->category->name }}</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html"> {{ $product->name }} </a></h3>
+                                <h3 class="product-title"><a href="{{ route('product', ['id' => $product->product_details[0]->id]) }}"> {{ $product->name }} </a></h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
                                     <span class="new-price">{{ $product->product_details[0]->price }} EGP</span>
