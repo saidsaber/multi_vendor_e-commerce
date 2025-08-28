@@ -35,6 +35,6 @@
     }
 </style>
 @section('data')
-    <x-header />
+    {{-- <x-header :cart="$cart"/> --}}
     @livewire('one-product' , ['id' => $id])
 @endsection

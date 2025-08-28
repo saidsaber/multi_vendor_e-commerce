@@ -1,8 +1,9 @@
 @extends('layouts.header_tages')
 @section('activHome', 'megamenu-container active')
-
+{{-- @dd(count($data['cart'])) --}}
 @section('data')
-    <x-header :categories="$data['categories']"/>
+
+    <x-header :categories="$data['categories']" />
     <main>
         @if (!empty($data['categories']))
             <x-slider />

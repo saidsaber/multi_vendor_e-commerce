@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class OneProduct extends Component
 {
     public $product;
+    public $cart;
     public $id;
     public $color;
     public $size;
@@ -31,7 +32,12 @@ class OneProduct extends Component
         }
         Cart::create($data);
         session()->flash('success', 'added to cart successfully');
-        return;
+        $this->mount();
+    }
+
+    public function delete(){
+        Cart::where('user_id' , Auth::id())->where('product_detail_id', $this->id)->delete();
+        $this->mount();
     }
 
     public function change()
@@ -47,11 +53,16 @@ class OneProduct extends Component
     }
     public function mount()
     {
+        $this->cart = Cart::where('user_id', Auth::id())->get();
+
         $this->product = Product_Detail::with([
             'size',
             'color',
             'images',
             'product',
+            'product.category',
+            'product.reviews',
+            'product.reviews.user',
             'product.colors',
             'product.sizes',
             'cartForUser'

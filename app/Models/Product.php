@@ -2,33 +2,48 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name' , 'description' , 'store_id', 'category_id'];
-    public function store(){
+    protected $fillable = ['name', 'description', 'store_id', 'category_id'];
+    public function store()
+    {
         return $this->belongsTo(Store::class);
     }
 
-    public function category(){
+    public function reviews()
+    {
+        return $this->hasMany(Product_Review::class);
+    }
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function product_reviews(){
+    public function product_reviews()
+    {
         return $this->hasMany(Product_Review::class);
     }
 
-    public function product_details(){
+    public function product_details()
+    {
         return $this->hasMany(Product_Detail::class);
     }
 
-    public function colors(){
+    public function colors()
+    {
         return $this->hasMany(color::class);
     }
 
-    public function sizes(){
+    public function sizes()
+    {
         return $this->hasMany(size::class);
     }
 
+    public function wishList()
+    {
+        return $this->hasOne(Wish_List::class, 'product_id')->where('user_id' , Auth::id());
+    }
 }

@@ -42,17 +42,11 @@ class CreateProduct extends Component
 
     public function sizeStep()
     {
-        // $this->validate([
-        //     'size'        => 'string',
-        // ]);
         $this->step++;
     }
     public function save()
     {
-        // $this->validate([
-        //     'color'       => 'string',
-        // ]);
-        // _____________________Create Product____________________________
+        // ________________Create Product____________________________
         $product = Product::create([
             'name' => $this->productName,
             'description' => $this->description,
@@ -78,7 +72,7 @@ class CreateProduct extends Component
                 Color::create($d);
             }
         }
-        $this->step = 1;
+        return to_route('vendor.product.details' , $product->id);
     }
     public function render()
     {

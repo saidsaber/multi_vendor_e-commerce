@@ -10,31 +10,27 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckOutController extends Controller
 {
-    public function checkout(Request $request)
+    public function checkout(Order $orders)
     {
         $data = [];
-        $carts = Cart::with([
-            'productDetail',
-            'productDetail.size',
-            'productDetail.color',
-            'productDetail.images',
-            'productDetail.product',
-            'productDetail.product.colors',
-            'productDetail.product.sizes',
-        ])->where('user_id', Auth::id())->get();
+        $orders->load([
+            'order_items',
+            'order_items.product_detail',
 
-        foreach ($carts as $cart) {
+        ]);
+        // dd($orders);
+        foreach ($orders->order_items as $item) {
             $data[] = [
                 'price_data' => [
                     'currency' => 'egp',
-                    'product_data' => ['name' => $cart->productDetail->product->name],
-                    'unit_amount' => $cart->productDetail->price * 100,
+                    'product_data' => ['name' => $item->product_detail->product->name],
+                    'unit_amount' => $item->product_detail->price * 100,
                 ],
-                'quantity' => $cart->quantaty,
+                'quantity' => $item->quantaty,
             ];
         }
-        // dd($data);
 
+        // dd($data);
         $sessionOptions = [
             'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('checkout.cancel') . '?session_id={CHECKOUT_SESSION_ID}',
@@ -43,42 +39,28 @@ class CheckOutController extends Controller
                     $data
                 ],
             ],
+            'metadata' => [
+                'order_id' => $orders->id,
+                'user_id'  => auth()->id(),
+            ],
         ];
-
-        // dd(Auth::user()->checkout(null , $sessionOptions));
         return Auth::user()->checkout(null, $sessionOptions);
     }
 
     public function success(Request $request)
     {
         $data = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
-        $order = [
-            'user_id' => Auth::id(),
-            'total' => $data->amount_total / 100,
-            'status' => 'paid',
-            'payment_method' => $data->id,
-            'payment_status' => 'paid',
-        ];
         if ($data->status == "complete" && $data->payment_status == "paid") {
-            $id = Order::create($order)->id;
-            $carts = Cart::with('productDetail')->where('user_id', Auth::id())->get();
-            foreach ($carts as $cart) {
-                Order_Item::create([
-                    'order_id' => $id,
-                    'product_detail_id' => $cart->product_detail_id,
-                    'quantaty' => $cart->quantaty,
-                    'price' => $cart->productDetail->price
-                ]);
-                $cart->delete();
-            }
-            return to_route('cart')->with('success' , 'The payment was completed successfully.');
+            $order = Order::where('id', $data->metadata->order_id)->first();
+            $order->update(['payment_status' => 'paid']);
+            return to_route('cart')->with('success', 'The payment was completed successfully.');
         }
     }
     public function cancel(Request $request)
     {
         $data = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
         if ($data->status == "open" && $data->payment_status == "unpaid") {
-            dd('Payment failed');
+            return to_route('cart')->with('error', 'Payment failed');
         }
     }
 }

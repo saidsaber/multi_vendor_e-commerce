@@ -14,7 +14,7 @@ use Laravel\Cashier\Billable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasApiTokens, Notifiable , Billable;
+    use HasFactory, HasApiTokens, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -51,7 +51,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function stores(){
+    public function stores()
+    {
         return $this->hasMany(Store::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Product_Review::class);
     }
 }

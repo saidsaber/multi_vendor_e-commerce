@@ -1,6 +1,7 @@
 @props(['products'])
 <div class="container for-you">
-    <div class="heading heading-flex mb-3">
+    <hr>k
+    {{-- <div class="heading heading-flex mb-3">
         <div class="heading-left">
             <h2 class="title">Recommendation For You</h2><!-- End .title -->
         </div><!-- End .heading-left -->
@@ -8,24 +9,42 @@
         <div class="heading-right">
             <a href="#" class="title-link">View All Recommendadion <i class="icon-long-arrow-right"></i></a>
         </div><!-- End .heading-right -->
-    </div><!-- End .heading -->
+    </div><!-- End .heading --> --}}
 
     <div class="products">
         <div class="row justify-content-center">
             @if (!empty($products))
-                {{-- @dd($products) --}}
                 @foreach ($products as $product)
+                    {{-- @dd($product)reviews --}}
                     <div class="col-6 col-md-4 col-lg-3">
                         <div class="product product-2">
                             <figure class="product-media">
                                 {{-- <span class="product-label label-circle label-sale">Sale</span> --}}
-                                <a href="product.html">
+                                <a href="{{ route('product', ['id' => $product->product_details[0]->id]) }}">
                                     <img src="{{ asset('storage/' . $product->product_details[0]->images[0]->path) }}"
                                         alt="Product image" class="product-image" style="width: 228px ; height: 228px;">
                                 </a>
-
+                                {{-- @dd($product) --}}
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                    @if (isset($product->wishList))
+                                        <form action="{{ route('delete.wishlist', $product->wishList->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-link p-0 border-0 bg-transparent"
+                                                title="إزالة من المفضلة">
+                                                <i class="fa-solid fa-heart" style="font-size:24px; color:#3399ff;"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('add.wishlist', $product->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-link p-0 border-0 bg-transparent"
+                                                title="إضافة للمفضلة">
+                                                <i class="fa-regular fa-heart"
+                                                    style="font-size:24px; color:#3399ff;"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                    {{-- <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a> --}}
                                 </div><!-- End .product-action -->
 
                                 <div class="product-action">
@@ -38,9 +57,12 @@
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="{{ route('category.products' , $product->category->id) }}">{{ $product->category->name }}</a>
+                                    <a
+                                        href="{{ route('category.products', $product->category->id) }}">{{ $product->category->name }}</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="{{ route('product', ['id' => $product->product_details[0]->id]) }}"> {{ $product->name }} </a></h3>
+                                <h3 class="product-title"><a
+                                        href="{{ route('product', ['id' => $product->product_details[0]->id]) }}">
+                                        {{ $product->name }} </a></h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
                                     <span class="new-price">{{ $product->product_details[0]->price }} EGP</span>
@@ -48,9 +70,11 @@
                                 </div><!-- End .product-price -->
                                 <div class="ratings-container">
                                     <div class="ratings">
-                                        <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
+                                        <div class="ratings-val"
+                                            style="width: {{ isset($product->reviews[0]) ? $product->reviews[0]->rating * 20 : 0 }}%;">
+                                        </div><!-- End .ratings-val -->
                                     </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 4 Reviews )</span>
+                                    <span class="ratings-text">( {{ count($product->reviews) }} Reviews )</span>
                                 </div><!-- End .rating-container -->
 
                                 <div class="product-nav product-nav-dots">

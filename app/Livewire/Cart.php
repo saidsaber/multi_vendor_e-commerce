@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Adress;
 use Livewire\Component;
 use App\Models\Cart as shop;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Cart extends Component
 {
     public $carts;
+    public $addresses;
     public $quantaty ;
 
     public function mount()
@@ -22,7 +24,7 @@ class Cart extends Component
             'productDetail.product.colors',
             'productDetail.product.sizes',
             ])->where('user_id', Auth::id())->get();
-        // dd($this->cart);
+        $this->addresses = Adress::where('user_id' ,Auth::id() )->get();
     }
 
     public function increment($cartId){

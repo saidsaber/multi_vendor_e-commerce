@@ -32,8 +32,18 @@ class Product_Detail extends Model
     {
         return $this->hasMany(Cart::class, 'product_detail_id');
     }
+    public function refund_requests()
+    {
+        return $this->hasMany(Refund_Request::class, 'product_detail_id');
+    }
     public function cartForUser()
     {
         return $this->hasOne(Cart::class, 'product_detail_id')->where('user_id', Auth::id());
     }
+
+    public function order_items()
+    {
+        return $this->hasMany(Order_Item::class, 'order_id');
+    }
+
 }

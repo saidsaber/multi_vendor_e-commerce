@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('refund_request', function (Blueprint $table) {
+        Schema::create('adress', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained();
-            $table->string('reason');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('city');
+            $table->string('street')->nullable();
+            $table->text('adress');
+            $table->string('phone')->nullable();
+
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('refund_request');
+        Schema::dropIfExists('adress');
     }
 };
