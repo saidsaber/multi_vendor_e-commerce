@@ -44,6 +44,17 @@ class Product extends Model
 
     public function wishList()
     {
-        return $this->hasOne(Wish_List::class, 'product_id')->where('user_id' , Auth::id());
+        return $this->hasOne(Wish_List::class, 'product_id')->where('user_id', Auth::id());
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($store) {
+            $store->product_details()->delete();
+            $store->wishList()->delete();
+            $store->colors()->delete();
+            $store->sizes()->delete();
+            $store->product_reviews()->delete();
+        });
     }
 }

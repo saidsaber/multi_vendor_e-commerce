@@ -44,7 +44,7 @@ class OrderController extends Controller
 
     public function createOrder(Request $request)
     {
-        $carts = Cart::with('productDetail')->where('user_id', Auth::id())->get();
+        $carts = Cart::with('productDetail' , 'productDetail.product')->where('user_id', Auth::id())->get();
         if (!empty($carts[0])) {
             $total = 0;
             foreach ($carts as $cart) {
@@ -70,6 +70,7 @@ class OrderController extends Controller
                 ]);
                 $cart->delete();
             }
+            $carts[0]->productDetail->product->update(['sale' , ++$carts[0]->productDetail->product->sale]);
             if($request->payment_method == 'visa'){
                 return to_route('checkout' , $id);
             }

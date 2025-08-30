@@ -46,4 +46,14 @@ class Product_Detail extends Model
         return $this->hasMany(Order_Item::class, 'order_id');
     }
 
+
+    protected static function booted()
+    {
+        static::deleting(function ($store) {
+            $store->images()->delete();
+            $store->carts()->delete();
+            $store->refund_requests()->delete();
+            $store->order_items()->delete();
+        });
+    }
 }

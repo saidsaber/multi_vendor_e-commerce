@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\StoresController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Middleware\Admin\IsAdminMiddleware;
+use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StoresController;
+use App\Http\Middleware\Admin\IsAdminMiddleware;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Models\Product;
 
 Route::get('login', function () {
     return view('login', ['role' => 'admin']);
@@ -14,12 +17,18 @@ Route::post('login', [UserController::class, 'login'])->name('post.admin.login')
 
 Route::middleware(IsAdminMiddleware::class)->group(function () {
     Route::get('/', function () {
-        return view('admin.main');
+        $data = [
+            'sales' => Product::sum('sale'),
+            'revenue' => Order::sum('total'),
+            'customers' => User::where('role' , '=' , 'web')->count('id')
+        ];
+        // dd($data);
+        return view('admin.main' , ['data' => $data]);
     })->name('admin.main');
 
-    Route::get('/products', function () {
-        return view('admin.products');
-    })->name('admin.products');
+    // Route::get('/products', function () {
+    //     return view('admin.products');
+    // })->name('admin.products');
 
     Route::get('/refund_request', function () {
         return view('admin.refundRequest');
@@ -29,6 +38,7 @@ Route::middleware(IsAdminMiddleware::class)->group(function () {
     Route::post('/stores/{store}', [StoresController::class , 'accept'])->name('admin.accept.store');
 
     Route::get('/joinRequest', [StoresController::class , 'requestStore'])->name('admin.joinRequest');
+    Route::post('/store/delete/{store}', [StoresController::class , 'delete'])->name('admin.delete.store');
 
     Route::get('/category', function(){
         return view('admin.category');

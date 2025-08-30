@@ -51,7 +51,7 @@ class CreateProduct extends Component
             'name' => $this->productName,
             'description' => $this->description,
             'category_id' => $this->category,
-            'store_id' => Auth::guard('vendor')->user()->stores[0]['id']
+            'store_id' => Auth::guard('vendor')->user()->store->id
         ]);
         // _____________________Create Sizes____________________________
         if (!empty($this->size)) {

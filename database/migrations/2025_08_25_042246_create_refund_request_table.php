@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('refund_request', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');     // المستخدم اللي قدم طلب الإرجاع
-            $table->unsignedBigInteger('order_id');    // الطلب المرتبط
-            $table->unsignedBigInteger('product_detail_id');  // المنتج اللي هيرجع
-            $table->string('reason');                  // سبب الإرجاع
+            $table->unsignedBigInteger('user_id');     
+            $table->unsignedBigInteger('order_id');    
+            $table->unsignedBigInteger('product_detail_id');  
+            $table->string('reason');                  
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
 

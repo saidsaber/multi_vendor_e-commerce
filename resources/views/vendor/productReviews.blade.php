@@ -6,10 +6,10 @@
 
     <!-- ======= Sidebar ======= -->
 
-    <x-admin.sidebar isActive='refundRequest' />
+    <x-vendor.sidebar isactive='review' />
     <main id="main" class="main">
 
-        @livewire('admin.refund-request')
+        @livewire('vendor.product-reviews')
 
     </main><!-- End #main -->
 @endsection

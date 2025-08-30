@@ -24,4 +24,10 @@ class StoresController extends Controller
         $user->update(['role' => 'vendor']);
         return back();
     }   
+
+    public function delete(Store $store){
+        // dd($store);
+        $store->delete();
+        return back();
+    }
 }

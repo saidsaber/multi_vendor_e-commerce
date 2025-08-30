@@ -24,9 +24,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
+                <a class="nav-link {{ $active != 'review' ? 'collapsed' : '' }}" href="{{ route('reviews') }}">
                     <i class="bx bx-repeat"></i>
                     <span>Review Product</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ $active != 'refundRequest' ? 'collapsed' : '' }}" href="{{ route('refundRequest') }}">
+                    <i class="bx bx-repeat"></i>
+                    <span>Refund Requestes</span>
                 </a>
             </li>
 

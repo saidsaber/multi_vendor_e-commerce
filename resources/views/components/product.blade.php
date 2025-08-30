@@ -1,6 +1,6 @@
 @props(['products'])
 <div class="container for-you">
-    <hr>k
+    <hr>
     {{-- <div class="heading heading-flex mb-3">
         <div class="heading-left">
             <h2 class="title">Recommendation For You</h2><!-- End .title -->

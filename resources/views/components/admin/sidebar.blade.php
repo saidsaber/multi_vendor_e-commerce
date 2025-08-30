@@ -19,12 +19,7 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link {{ $active != 'products' ? 'collapsed' : '' }}" href="{{ route('admin.products') }}">
-                    <i class="bx bxl-product-hunt"></i>
-                    <span>Products</span>
-                </a>
-            </li>
+
 
             <li class="nav-item">
                 <a class="nav-link {{ $active != 'category' ? 'collapsed' : '' }}" href={{ route('admin.category') }}>

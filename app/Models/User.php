@@ -51,9 +51,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function stores()
+    public function store()
     {
-        return $this->hasMany(Store::class);
+        return $this->hasOne(Store::class);
     }
 
     public function reviews()

@@ -14,6 +14,9 @@ class Order extends Model
         return $this->hasMany(Order_Item::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     public function orderItem(){
         return $this->hasOne(Order_Item::class)->where('user_id' , Auth::id());
     }

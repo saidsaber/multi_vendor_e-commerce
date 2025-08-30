@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends Model
 {
     //
-    protected $fillable = ['name' , 'description', 'user_id' , 'logo' , 'isActive'];
-    public function user(){
+    protected $fillable = ['name', 'description', 'user_id', 'logo', 'isActive'];
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function products(){
+    public function products()
+    {
         return $this->hasMany(Product::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($store) {
+            // $store->orders()->delete();
+            $store->products()->delete();
+        });
     }
 }

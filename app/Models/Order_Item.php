@@ -16,4 +16,6 @@ class Order_Item extends Model
     public function product_detail(){
         return $this->belongsTo(Product_Detail::class , 'product_detail_id' );
     }
+
+    
 }

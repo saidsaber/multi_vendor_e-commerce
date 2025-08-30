@@ -32,30 +32,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        @if (isset($stores))
-                                            @foreach ($stores as $store)
-                                                <th scope="row"><img src="{{ asset("storage/".$store->logo) }}" alt=""
-                                                        style="    width: 70px; height: 80px;"></th>
+                                    @if (isset($stores))
+                                        @foreach ($stores as $store)
+                                            <tr>
+                                                <th scope="row"><img src="{{ asset('storage/' . $store->logo) }}"
+                                                        alt="" style="    width: 70px; height: 80px;"></th>
                                                 <th scope="row">{{ $store->user->name }}</th>
                                                 <th>{{ $store->name }}</th>
                                                 <th scope="row">
                                                     <li
                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                         <div>
-                                                            <form action="{{ route('admin.accept.store' , ['store' => $store->id]) }}" method="POST"
-                                                                style="display:inline-block;">
+                                                            <form
+                                                                action="{{ route('admin.delete.store', ['store' => $store->id]) }}"
+                                                                method="POST" style="display:inline-block;">
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-sm btn-primary">
-                                                                    accept
+                                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                                    delete
                                                                 </button>
                                                             </form>
                                                         </div>
                                                     </li>
                                                 </th>
-                                            @endforeach
-                                        @endif
-                                    </tr>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
 

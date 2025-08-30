@@ -2,7 +2,7 @@
     @if ($step == 1)
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Create Post</h5>
+                <h5 class="card-title">Create Product</h5>
 
                 <div class="col-12">
                     <input type="text" class="form-control" name="name" placeholder="Product Name"
@@ -46,7 +46,6 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Create size</h5>
-                {{ $productName }}
                 <div class="col-12">
                     <label for="sizes" class="form-label">
                         Enter sizes (separate each size with a comma ",")
@@ -65,10 +64,6 @@
             </div>
         </div>
     @elseif($step == 3)
-    {{ $productName }}
-    {{ $description }}
-    {{ $category }}
-    {{ $size }}
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Create color (separate each color with a comma ",")</h5>
