@@ -30,6 +30,8 @@
                                            <thead>
                                                <tr>
                                                    <th>Product</th>
+                                                   <th>Color</th>
+                                                   <th>Size</th>
                                                    <th>Price</th>
                                                    <th>Quantity</th>
                                                    <th>Total</th>
@@ -42,6 +44,7 @@
                                                    $totalPrice = 0;
                                                @endphp
                                                @foreach ($carts as $cart)
+                                                   {{-- @dd($cart) --}}
                                                    <tr>
                                                        <td class="product-col">
                                                            <div class="product">
@@ -58,33 +61,58 @@
                                                                </h3><!-- End .product-title -->
                                                            </div><!-- End .product -->
                                                        </td>
-                                                       <td class="price-col">{{ $cart->productDetail->price }} EGP</td>
+                                                       <td>
+                                                           @if (!empty($cart->productDetail->color))
+                                                               {{ $cart->productDetail->color->color }}
+                                                           @else
+                                                               null
+                                                           @endif
+                                                       </td>
+                                                       <td>
+                                                           @if (!empty($cart->productDetail->size))
+                                                               {{ $cart->productDetail->size->name }}
+                                                           @else
+                                                               null
+                                                           @endif
+                                                       </td>
+
+                                                       <td class="price-col">
+                                                           {{ $cart->productDetail->price }} EGP
+
+                                                       </td>
+
                                                        <td class="quantity-col">
-                                                           <div class="input-group input-spinner">
-                                                               <!-- زرار النقصان -->
-                                                               <div class="input-group-prepend">
-                                                                   <button type="button"
-                                                                       class="btn btn-decrement btn-spinner"
-                                                                       style="min-width: 26px"
-                                                                       wire:click="decrement({{ $cart->id }})">
-                                                                       <i class="icon-minus"></i>
-                                                                   </button>
-                                                               </div>
+                                                           @if ($cart->productDetail->stock >= $cart->quantaty && $cart->productDetail->status == 'available')
+                                                               <div class="input-group input-spinner">
+                                                                   <!-- زرار النقصان -->
+                                                                   <div class="input-group-prepend">
+                                                                       <button type="button"
+                                                                           class="btn btn-decrement btn-spinner"
+                                                                           style="min-width: 26px"
+                                                                           wire:click="decrement({{ $cart->id }})">
+                                                                           <i class="icon-minus"></i>
+                                                                       </button>
+                                                                   </div>
 
-                                                               <!-- الحقل -->
-                                                               <input type="text" class="form-control text-center"
-                                                                   value="{{ $cart->quantaty }}" readonly>
+                                                                   <!-- الحقل -->
+                                                                   <input type="text"
+                                                                       class="form-control text-center"
+                                                                       value="{{ $cart->quantaty }}" readonly>
 
-                                                               <!-- زرار الزيادة -->
-                                                               <div class="input-group-append">
-                                                                   <button type="button"
-                                                                       class="btn btn-increment btn-spinner"
-                                                                       style="min-width: 26px"
-                                                                       wire:click="increment({{ $cart->id }})">
-                                                                       <i class="icon-plus"></i>
-                                                                   </button>
+                                                                   <!-- زرار الزيادة -->
+                                                                   <div class="input-group-append">
+                                                                       <button type="button"
+                                                                           class="btn btn-increment btn-spinner"
+                                                                           style="min-width: 26px"
+                                                                           wire:click="increment({{ $cart->id }})">
+                                                                           <i class="icon-plus"></i>
+                                                                       </button>
+                                                                   </div>
                                                                </div>
-                                                           </div>
+                                                           @else
+                                                               <p style="color:red">out of stock</p>
+                                                           @endif
+
                                                        </td>
 
                                                        <td class="total-col">

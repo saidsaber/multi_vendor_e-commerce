@@ -28,7 +28,7 @@
                                         <th scope="col">image</th>
                                         <th scope="col">User Name</th>
                                         <th scope="col">store</th>
-                                        <th scope="col">btns</th>
+                                        {{-- <th scope="col">btns</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,7 +40,7 @@
                                                 <th scope="row">{{ $store->user->name }}</th>
                                                 <th>{{ $store->name }}</th>
                                                 <th scope="row">
-                                                    <li
+                                                    {{-- <li
                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                         <div>
                                                             <form
@@ -52,7 +52,7 @@
                                                                 </button>
                                                             </form>
                                                         </div>
-                                                    </li>
+                                                    </li> --}}
                                                 </th>
                                             </tr>
                                         @endforeach

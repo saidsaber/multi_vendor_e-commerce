@@ -3,6 +3,7 @@
 namespace App\Livewire\Vendor;
 
 use App\Models\Order;
+use App\Models\Order_Item;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,21 +13,30 @@ class OrderItems extends Component
     public $order;
     public $action;
 
-    public function updateStatus(){
-        $this->order->update(['status' => $this->action]);
+    public function updateStatus()
+    {
+        $this->order[0]->order->update(['status' => $this->action]);
         $this->mount();
     }
     public function mount()
     {
-        $this->order = Order::with([
-            'user:id,name',
-            'order_items.product_detail',
-            'order_items.product_detail.images',
-            'order_items.product_detail.product:id,name'
-        ])->whereHas('order_items.product_detail.product', function ($query) {
-            $query->where('store_id', Auth::guard('vendor')->user()->store->id);
-        })->where('id', $this->id)->where('status' , '!=' , 'cancelled')->first();
-        $this->action = $this->order->status;
+        $this->order = Order_Item::with([
+            'order',
+            'order.user:id,name',
+            'product_detail:id,product_id,price',
+            'product_detail.images',
+            'product_detail.product:id,name,store_id'
+        ])
+            ->whereHas('product_detail.product', function ($query) {
+                $query->where('store_id', Auth::guard('vendor')->user()->store->id);
+            })
+            ->whereHas('order', function ($query) {
+                $query->where('status', '!=', 'cancelled');
+            })
+            ->where('order_id', $this->id)
+            ->get();
+            $this->action = $this->order[0]->order->status;
+            // dd($this->order);
     }
     public function render()
     {

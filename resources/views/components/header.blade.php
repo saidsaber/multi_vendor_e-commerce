@@ -42,25 +42,13 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="index.html" class="logo">
+                <a href="{{ route('home') }}" class="logo">
                     <img src="{{ asset('assets/images/demos/demo-4/logo.png') }}" alt="Molla Logo" width="105"
                         height="25">
                 </a>
             </div><!-- End .header-left -->
 
-            <div class="header-center">
-                <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
-                    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                    <form action="#" method="get">
-                        <div class="header-search-wrapper search-wrapper-wide">
-                            <label for="q" class="sr-only">Search</label>
-                            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                            <input type="search" class="form-control" name="q" id="q"
-                                placeholder="Search product ..." required>
-                        </div><!-- End .header-search-wrapper -->
-                    </form>
-                </div><!-- End .header-search -->
-            </div>
+            @livewire('search')
 
             <div class="header-right">
                 <div class="wishlist">
@@ -117,7 +105,7 @@
                             <a href="{{ route('home') }}" class="sf-with-ul">Home</a>
                         </li>
                         <li class="@yield('activDashboard')">
-                            <a href="{{ route('dashboard') }}" class="sf-with-ul">Dashboard</a>
+                            <a href="{{ route('orders') }}" class="sf-with-ul">Dashboard</a>
                         </li>
                         <li class="@yield('activCart')">
                             <a href="{{ route('cart') }}" class="sf-with-ul">Cart</a>

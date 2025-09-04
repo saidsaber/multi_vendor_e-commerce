@@ -52,9 +52,9 @@ Route::get('/cart', function () {
     return view('cart' , ['cart' => $cart]);
 })->name('cart');
  
-Route::get('dashboard' , function(){
-    return view('dashboard' , ['page' => 'dashboard']);
-})->name('dashboard');
+// Route::get('dashboard' , function(){
+//     return view('dashboard' , ['page' => 'dashboard']);
+// })->name('dashboard');
 
 
 Route::get('/products/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');

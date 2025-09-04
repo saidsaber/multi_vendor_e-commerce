@@ -44,37 +44,56 @@ class OrderController extends Controller
 
     public function createOrder(Request $request)
     {
-        $carts = Cart::with('productDetail' , 'productDetail.product')->where('user_id', Auth::id())->get();
-        if (!empty($carts[0])) {
+        $carts = Cart::with('productDetail', 'productDetail.product')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        if ($carts->isNotEmpty()) {
             $total = 0;
             foreach ($carts as $cart) {
                 $total += $cart->productDetail->price * $cart->quantaty;
             }
-            $total += 50;
+            $total += 50; 
 
             $order = [
-                'user_id' => Auth::id(),
-                'total' => $total,
-                'status' => 'panding',
+                'user_id'        => Auth::id(),
+                'total'          => $total,
+                'status'         => 'panding',
                 'payment_method' => $request->payment_method == 'cod' ? 'Cash on delivery' : 'visa',
                 'payment_status' => 'panding',
             ];
 
             $id = Order::create($order)->id;
+
             foreach ($carts as $cart) {
-                Order_Item::create([
-                    'order_id' => $id,
-                    'product_detail_id' => $cart->product_detail_id,
-                    'quantaty' => $cart->quantaty,
-                    'price' => $cart->productDetail->price
-                ]);
-                $cart->delete();
+                if ($cart->productDetail->stock >= $cart->quantaty) {
+                    Order_Item::create([
+                        'order_id'          => $id,
+                        'product_detail_id' => $cart->product_detail_id,
+                        'quantaty'          => $cart->quantaty,
+                        'price'             => $cart->productDetail->price
+                    ]);
+
+                    $cart->productDetail->update([
+                        'stock' => $cart->productDetail->stock - $cart->quantaty
+                    ]);
+
+                    $cart->productDetail->product->increment('sale');
+
+                    if ($cart->productDetail->stock - $cart->quantaty <= 0) {
+                        $cart->productDetail->update(['status' => 'unavailable']);
+                    }
+
+                    $cart->delete();
+                }
             }
-            $carts[0]->productDetail->product->update(['sale' , ++$carts[0]->productDetail->product->sale]);
-            if($request->payment_method == 'visa'){
-                return to_route('checkout' , $id);
+
+            if ($request->payment_method == 'visa') {
+                return to_route('checkout', $id);
             }
+
         }
+
         return redirect()->back();
     }
 }

@@ -12,13 +12,20 @@ class OneProduct extends Component
     public $product;
     public $cart;
     public $id;
+    public $product_detail_id;
     public $color;
     public $size;
-    public $quantity;
+    public $quantity = 1;
     public function addToCart()
     {
+        $productDetail = Product_Detail::find($this->product_detail_id);
+        if (!$productDetail) {
+            session()->flash('error', 'This product does not exist');
+            return;
+        }
+
         $data = [
-            'product_detail_id' => $this->id,
+            'product_detail_id' => $this->product_detail_id,
             'quantaty' =>  $this->quantity,
             'user_id' => Auth::id(),
         ];
@@ -35,8 +42,9 @@ class OneProduct extends Component
         $this->mount();
     }
 
-    public function delete(){
-        Cart::where('user_id' , Auth::id())->where('product_detail_id', $this->id)->delete();
+    public function delete()
+    {
+        Cart::where('user_id', Auth::id())->where('product_detail_id', $this->product_detail_id)->delete();
         $this->mount();
     }
 
@@ -49,11 +57,24 @@ class OneProduct extends Component
         } elseif ($this->size != 0) {
             $this->product = Product_Detail::with('size', 'color', 'images', 'product', 'product.colors', 'product.sizes')->where('size_id', $this->size)->first();
         }
-        return to_route('product', [$this->product->id]);
+        $this->setDate();
+    }
+
+
+    public function setDate()
+    {
+        if (!empty($this->product)) {
+            $this->color = $this->product->color_id;
+            $this->size = $this->product->size_id;
+            $this->product_detail_id = $this->product->id;
+        } else {
+            abort(404);
+        }
     }
     public function mount()
     {
         $this->cart = Cart::where('user_id', Auth::id())->get();
+        // $this->product
 
         $this->product = Product_Detail::with([
             'size',
@@ -66,10 +87,10 @@ class OneProduct extends Component
             'product.colors',
             'product.sizes',
             'cartForUser'
-        ])->where('id', $this->id)->first();
-        $this->color = $this->product->color_id;
-        $this->size = $this->product->size_id;
-        // dd($this->product);
+        ])->whereHas('product', function ($query) {
+            $query->where('id', $this->id);
+        })->first();
+        $this->setDate();
     }
     public function render()
     {

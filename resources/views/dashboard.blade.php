@@ -9,11 +9,7 @@
                     <div class="row">
                         <aside class="col-md-4 col-lg-3">
                             <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}"
-                                        id="tab-dashboard-link" href="{{ route('dashboard') }}" role="tab"
-                                        aria-controls="tab-dashboard" aria-selected="false">Dashboard</a>
-                                </li>
+                                
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->is('orders*') ? 'active' : '' }}"
                                         href="{{ route('orders') }}">Orders</a>
@@ -22,6 +18,9 @@
                                     <a class="nav-link {{ request()->is('adresses*') ? 'active' : '' }}"
                                         id="tab-address-link" href="{{ route('adresses') }}" role="tab"
                                         aria-controls="tab-address" aria-selected="false">Adresses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('vendor.create.store') }}">Create Store</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('logout') }}">Sign Out</a>

@@ -20,7 +20,7 @@
                         <div class="product product-2">
                             <figure class="product-media">
                                 {{-- <span class="product-label label-circle label-sale">Sale</span> --}}
-                                <a href="{{ route('product', ['id' => $product->product_details[0]->id]) }}">
+                                <a href="{{ route('product', ['id' => $product->id]) }}">
                                     <img src="{{ asset('storage/' . $product->product_details[0]->images[0]->path) }}"
                                         alt="Product image" class="product-image" style="width: 228px ; height: 228px;">
                                 </a>
@@ -50,7 +50,7 @@
                                 <div class="product-action">
                                     {{-- <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add
                                             to cart</span></a> --}}
-                                    <a href="{{ route('product', ['id' => $product->product_details[0]->id]) }}"
+                                    <a href="{{ route('product', ['id' => $product->id]) }}"
                                         class="btn-product btn" title="Quick view"><span>quick view</span></a>
                                 </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
@@ -61,7 +61,7 @@
                                         href="{{ route('category.products', $product->category->id) }}">{{ $product->category->name }}</a>
                                 </div><!-- End .product-cat -->
                                 <h3 class="product-title"><a
-                                        href="{{ route('product', ['id' => $product->product_details[0]->id]) }}">
+                                        href="{{ route('product', ['id' => $product->id]) }}">
                                         {{ $product->name }} </a></h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">

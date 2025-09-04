@@ -12,7 +12,7 @@
         </thead>
         <tbody>
 
-            @foreach ($order->order_items as $item)
+            @foreach ($order as $item)
                 <tr>
                     <td><img src="{{ asset('storage/' . $item->product_detail->images[0]->path) }}" class="img-thumbnail" alt="Product" style="width:50px"></td>
                     <td>{{ $item->product_detail->product->name }}</td>
@@ -36,7 +36,7 @@
                             <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                         </form>
 
-                        <h5 class="mb-0">Grand Total: <span class="text-success">{{ $order->total }} EGP</span>
+                        <h5 class="mb-0">Grand Total: <span class="text-success">{{ $order[0]->order->total }} EGP</span>
                         </h5>
                     </div>
                 </td>
