@@ -25,33 +25,13 @@
                                         alt="Product image" class="product-image" style="width: 228px ; height: 228px;">
                                 </a>
                                 {{-- @dd($product) --}}
-                                <div class="product-action-vertical">
-                                    @if (isset($product->wishList))
-                                        <form action="{{ route('delete.wishlist', $product->wishList->id) }}" method="post">
-                                            @csrf
-                                            <button type="submit" class="btn btn-link p-0 border-0 bg-transparent"
-                                                title="إزالة من المفضلة">
-                                                <i class="fa-solid fa-heart" style="font-size:24px; color:#3399ff;"></i>
-                                            </button>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('add.wishlist', $product->id) }}" method="post">
-                                            @csrf
-                                            <button type="submit" class="btn btn-link p-0 border-0 bg-transparent"
-                                                title="إضافة للمفضلة">
-                                                <i class="fa-regular fa-heart"
-                                                    style="font-size:24px; color:#3399ff;"></i>
-                                            </button>
-                                        </form>
-                                    @endif
-                                    {{-- <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a> --}}
-                                </div><!-- End .product-action -->
+                                @livewire('add-wish-list', ['product' => $product])
 
                                 <div class="product-action">
                                     {{-- <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add
                                             to cart</span></a> --}}
-                                    <a href="{{ route('product', ['id' => $product->id]) }}"
-                                        class="btn-product btn" title="Quick view"><span>quick view</span></a>
+                                    <a href="{{ route('product', ['id' => $product->id]) }}" class="btn-product btn"
+                                        title="Quick view"><span>quick view</span></a>
                                 </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
@@ -60,8 +40,7 @@
                                     <a
                                         href="{{ route('category.products', $product->category->id) }}">{{ $product->category->name }}</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a
-                                        href="{{ route('product', ['id' => $product->id]) }}">
+                                <h3 class="product-title"><a href="{{ route('product', ['id' => $product->id]) }}">
                                         {{ $product->name }} </a></h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
@@ -91,5 +70,10 @@
             @endif
 
         </div><!-- End .row -->
+        @if ($products->hasPages())
+            <div class="mt-3">
+                {{ $products->links() }}
+            </div>
+        @endif
     </div><!-- End .products -->
 </div><!-- End .container -->

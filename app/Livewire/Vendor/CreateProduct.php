@@ -22,7 +22,7 @@ class CreateProduct extends Component
 
     protected $rules = [
         'productName' => 'required|string|max:255',
-        'description' => 'required|string|max:500',
+        'description' => 'required|string',
         'category' => 'required|exists:categories,id',
         'size'        => 'string',
         'color'       => 'string',
@@ -34,7 +34,7 @@ class CreateProduct extends Component
     {
         $this->validate([
             'productName' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
+            'description' => 'required|string',
             'category' => 'required|exists:categories,id'
         ]);
         $this->step++;

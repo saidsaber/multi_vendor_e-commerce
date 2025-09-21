@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Policies\ProductDetail;
+
 
 class Product_Detail extends Model
 {
@@ -32,10 +34,7 @@ class Product_Detail extends Model
     {
         return $this->hasMany(Cart::class, 'product_detail_id');
     }
-    public function refund_requests()
-    {
-        return $this->hasMany(Refund_Request::class, 'product_detail_id');
-    }
+
     public function cartForUser()
     {
         return $this->hasOne(Cart::class, 'product_detail_id')->where('user_id', Auth::id());
@@ -52,7 +51,6 @@ class Product_Detail extends Model
         static::deleting(function ($store) {
             $store->images()->delete();
             $store->carts()->delete();
-            $store->refund_requests()->delete();
             $store->order_items()->delete();
         });
     }

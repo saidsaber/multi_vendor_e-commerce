@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\WishListController;
 use App\Models\Cart;
 use App\Models\Product;
@@ -27,7 +28,7 @@ Route::get('/', HomePageController::class)->name('home');
 Route::get('/category/{id}', function ($id) {
     $data = [
         'categories' => [],
-        'products' => Product::with('product_details', 'product_details.size', 'product_details.color', 'product_details.images', 'category', 'colors')->where('category_id', $id)->whereHas('product_details')->get()
+        'products' => Product::with('product_details', 'product_details.size', 'product_details.color', 'product_details.images', 'category', 'colors')->where('category_id', $id)->whereHas('product_details')->paginate(4)
     ];
     // dd($data['products']);
     return view('index', ['data' => $data]);
@@ -52,22 +53,22 @@ Route::get('/cart', function () {
     return view('cart' , ['cart' => $cart]);
 })->name('cart');
  
-// Route::get('dashboard' , function(){
-//     return view('dashboard' , ['page' => 'dashboard']);
-// })->name('dashboard');
+Route::get('thanks' , function(){
+    return view('thankYouPage' );
+})->name('thanks');
 
 
 Route::get('/products/{product}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
-Route::get('/orders/{order}/return', [ReturnController::class, 'create'])->name('returns.create');
-Route::post('/orders/{order}/return', [ReturnController::class, 'store'])->name('returns.store');
+Route::get('/orders/{order_Item}/return', [ReturnController::class, 'create'])->name('returns.create');
+Route::post('/orders/{order_Item}/return', [ReturnController::class, 'store'])->name('returns.store');
 
 
 Route::get('orders' , [OrderController::class , 'index'])->name('orders');
 Route::get('orders/{order}' , [OrderController::class , 'order'])->name('order');
 Route::post('orders/create' , [OrderController::class , 'createOrder'])->name('order.create');
-Route::post('orders/cancell/{order}' , [OrderController::class , 'cancellOrder'])->name('order.cancell');
+Route::post('orders/cancell/{order_item}' , [OrderController::class , 'cancellOrder'])->name('order.cancell');
 Route::get('adresses' , [AdressController::class , 'index'])->name('adresses');
 Route::post('adresses/create' , [AdressController::class , 'createAddress'])->name('adresses.post.create');
 Route::delete('adresses/delete/{adress}' , [AdressController::class , 'delete'])->name('adresses.delete');
@@ -87,3 +88,9 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/checkout/success', [CheckOutController::class, 'success'])->middleware('auth:sanctum')->name('checkout.success');
 Route::get('/checkout/cancel', [CheckOutController::class, 'cancel'])->middleware('auth:sanctum')->name('checkout.cancel');
 Route::get('/checkout/{orders}', [CheckOutController::class, 'checkout'])->middleware('auth:sanctum')->name('checkout');
+
+
+Route::controller(GoogleAuthController::class)->group(function(){
+    Route::get('auth/google' , 'index')->name('auth.redicrict');
+    Route::get('auth/callback/google' , 'callback')->name('auth.callback');
+});

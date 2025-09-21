@@ -21,6 +21,9 @@
                                {{ session('error') }}
                            </div>
                        @endif
+                       @error('address_id')
+                           <span class="text-danger">{{ $message }}</span>
+                       @enderror
                        <div>
                            @if (isset($carts[0]))
                                {{-- @dd($carts) --}}
@@ -65,14 +68,14 @@
                                                            @if (!empty($cart->productDetail->color))
                                                                {{ $cart->productDetail->color->color }}
                                                            @else
-                                                               null
+                                                               -
                                                            @endif
                                                        </td>
                                                        <td>
                                                            @if (!empty($cart->productDetail->size))
                                                                {{ $cart->productDetail->size->name }}
                                                            @else
-                                                               null
+                                                               -
                                                            @endif
                                                        </td>
 
@@ -166,8 +169,7 @@
                                                        <div class="mb-3">
                                                            <label for="address" class="form-label">Choose
                                                                Address</label>
-                                                           <select name="address_id" id="address" class="form-select"
-                                                               required="">
+                                                           <select name="address_id" id="address" class="form-select">
 
                                                                @if (!empty($addresses))
                                                                    @foreach ($addresses as $address)
@@ -177,6 +179,7 @@
                                                                    @endforeach
                                                                @endif
                                                            </select>
+                                                           <a href="{{ route('adresses.create') }}" onclick="{{ session(['redirectToPage' => 'cart']) }}">create address</a>
                                                        </div>
 
 

@@ -16,14 +16,17 @@
                 <th>Rating</th>
                 <th>Review</th>
                 <th>Date</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $d)
                 <tr>
                     <td>{{ $i++ }}</td>
-                    <td>{{ $d->product->name }}</td>
+                    <td>
+                        <a href="{{ route('vendor.product.details' , $d->product->id) }}">
+                            {{ $d->product->name }}
+                        </a>
+                    </td>
                     <td>{{ $d->user->name }}</td>
                     <td>
 
@@ -41,11 +44,6 @@
                     </td>
                     <td>{{ $d->comment }}</td>
                     <td>{{ $d->created_at }}</td>
-                    <td>
-                        <button class="btn btn-sm btn-danger" wire:click="delete({{ $d->id }})">
-                            <i class="fa-solid fa-trash"></i> Delete
-                        </button>
-                    </td>
                 </tr>
             @endforeach
         </tbody>

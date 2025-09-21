@@ -14,16 +14,11 @@ return new class extends Migration
         Schema::create('refund_request', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');     
-            $table->unsignedBigInteger('order_id');    
-            $table->unsignedBigInteger('product_detail_id');  
             $table->string('reason');                  
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
 
-            // Foreign keys
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('product_detail_id')->references('id')->on('product_details')->onDelete('cascade');
         });
     }
 

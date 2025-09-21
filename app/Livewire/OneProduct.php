@@ -39,12 +39,14 @@ class OneProduct extends Component
         }
         Cart::create($data);
         session()->flash('success', 'added to cart successfully');
+        $this->dispatch('wishList');
         $this->mount();
     }
 
     public function delete()
     {
         Cart::where('user_id', Auth::id())->where('product_detail_id', $this->product_detail_id)->delete();
+        $this->dispatch('wishList');
         $this->mount();
     }
 

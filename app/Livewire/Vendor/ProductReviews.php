@@ -11,13 +11,6 @@ class ProductReviews extends Component
 {
     public $data;
 
-    public function delete($id)
-    {
-        $review = Product_Review::findOrFail($id);
-        $review->delete();
-        session()->flash('message', 'Review deleted successfully!');
-        $this->mount();
-    }
     public function mount()
     {
 

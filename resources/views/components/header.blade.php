@@ -43,34 +43,14 @@
                 </button>
 
                 <a href="{{ route('home') }}" class="logo">
-                    <img src="{{ asset('assets/images/demos/demo-4/logo.png') }}" alt="Molla Logo" width="105"
+                    <img src="{{ asset('assets/images/logoo.png') }}" alt="Molla Logo" width="105"
                         height="25">
                 </a>
             </div><!-- End .header-left -->
 
             @livewire('search')
 
-            <div class="header-right">
-                <div class="wishlist">
-                    <a href="{{ route('whishlist') }}" title="Wishlist">
-                        <div class="icon">
-                            <i class="icon-heart-o"></i>
-                            <span class="wishlist-count badge">{{ $wishListCount }}</span>
-                        </div>
-                        <p>Wishlist</p>
-                    </a>
-                </div><!-- End .compare-dropdown -->
-
-                <div class="dropdown cart-dropdown">
-                    <a href="{{ route('cart') }}" class="dropdown-toggle" aria-expanded="false" data-display="static">
-                        <div class="icon">
-                            <i class="icon-shopping-cart"></i>
-                            <span class="cart-count">{{ $cartCount }}</span>
-                        </div>
-                        <p>Cart</p>
-                    </a>
-                </div><!-- End .cart-dropdown -->
-            </div><!-- End .header-right -->
+            @livewire('bottun-count')
         </div><!-- End .container -->
     </div><!-- End .header-middle -->
 

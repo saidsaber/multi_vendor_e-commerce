@@ -21,7 +21,6 @@ class OrdersController extends Controller
                 $query->where('store_id', Auth::guard('vendor')->user()->store->id);
             })
             ->get();
-        // dd($orders);
         return view('vendor.orders', ['orders' => $orders]);
     }
 

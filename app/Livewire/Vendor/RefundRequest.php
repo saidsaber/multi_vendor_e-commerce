@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class RefundRequest extends Component
 {
     public $refunds;
+    public $filter = 'pending';
+
+    public function filterBy($data){
+        $this->filter = $data;
+        $this->mount();
+    }
 
     public function updateStatus($id , $value){
         Refund_Request::find($id)->update(['status' => $value]);
@@ -16,15 +22,20 @@ class RefundRequest extends Component
     }
     public function mount()
     {
-        $this->refunds = Refund_Request::with([
+        $q = Refund_Request::with([
             'user',
-            'order',
+            'orderItem',
             'product_detail',
             'product_detail.images',
             'product_detail.product'
         ])->wherehas('product_detail.product' , function($query){
             $query->where('store_id' , Auth::guard('vendor')->user()->store->id);
-        })->where('status' , '=' , 'pending')->get();
+        });
+
+        if($this->filter != 'all'){
+            $q->where('status' , '=' , 'pending');  
+        }
+        $this->refunds = $q->get();
     }
     public function render()
     {

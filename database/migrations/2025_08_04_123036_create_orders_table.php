@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->integer('total');
-            $table->enum('status', ['panding', 'paid', 'shipping' , 'deliverd' , 'cancelled'])->default('panding');
             $table->string('payment_method');
             $table->enum('payment_status', ['panding', 'paid', 'falled'])->default('panding');
             $table->timestamps();

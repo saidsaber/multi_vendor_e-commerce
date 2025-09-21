@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

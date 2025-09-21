@@ -29,10 +29,11 @@
 
             {{-- @dd($products) --}}
             @if (isset($products))
-                {{-- @dd($products) --}}
-                @foreach ($products as $product)
+                @foreach ($products->product_details as $product)
+                    {{-- @dd($product->images->first()->path) --}}
                     <tr class="row-danger">
-                        <td><img src="{{ asset('storage/' . $product->images[0]->path) }}" alt=""></td>
+                        
+                        <td><img src="{{ asset('storage/' . $product->images->first()->path) }}" alt=""></td>
                         <td>{{ $product->product->name }}</td>
                         <td>
                             {{ $product->size == null ? 'null' : $product->size->name }}
@@ -50,11 +51,17 @@
                             </button>
 
                             {{-- <input type="hidden" wire:change="product_detail_id" value="{{ $product->id }}"> --}}
-                            <div wire:init="$set('product_detail_id', {{ $product->id }})" style="display: inline-block">
+                            <div style="display: inline-block">
                                 <input type="file" id="upload" wire:model="image" hidden>
+
                                 <button type="button" class="btn btn-primary"
                                     onclick="document.getElementById('upload').click()">
-                                    Upload Image
+                                    اختر صورة
+                                </button>
+
+                                <button type="button" class="btn btn-success"
+                                    wire:click="uploadImage({{ $product->id }})">
+                                    رفع الصورة
                                 </button>
                             </div>
                         </td>

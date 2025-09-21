@@ -18,7 +18,6 @@ class CheckOutController extends Controller
             'order_items.product_detail',
 
         ]);
-        // dd($orders);
         foreach ($orders->order_items as $item) {
             $data[] = [
                 'price_data' => [
@@ -30,7 +29,6 @@ class CheckOutController extends Controller
             ];
         }
 
-        // dd($data);
         $sessionOptions = [
             'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('checkout.cancel') . '?session_id={CHECKOUT_SESSION_ID}',
@@ -53,7 +51,7 @@ class CheckOutController extends Controller
         if ($data->status == "complete" && $data->payment_status == "paid") {
             $order = Order::where('id', $data->metadata->order_id)->first();
             $order->update(['payment_status' => 'paid']);
-            return to_route('cart')->with('success', 'The payment was completed successfully.');
+            return to_route('thanks');
         }
     }
     public function cancel(Request $request)

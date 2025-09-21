@@ -161,13 +161,13 @@
         <div class="mobile-menu-wrapper">
             <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-            {{-- @livewire('search') --}}
-            <form action="#" method="get" class="mobile-search">
+            @livewire('search')
+            {{-- <form action="#" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">Search</label>
                 <input type="search" class="form-control" name="mobile-search" id="mobile-search"
                     placeholder="Search in..." required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-            </form>
+            </form> --}}
             <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab"
@@ -198,9 +198,14 @@
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                     <nav class="mobile-cats-nav">
-                        <ul class="mobile-cats-menu">
-                            <li><a href="#">Outdoor Furniture </a></li>
-                        </ul><!-- End .mobile-cats-menu -->
+                        @if (!empty($data['categories']))
+                            <ul class="mobile-cats-menu">
+                                @foreach ($data['categories'] as $category)
+                                    <li><a href="{{ route('category.products', $category->id) }}">{{ $category->name }}
+                                        </a></li>
+                                @endforeach
+                            </ul><!-- End .mobile-cats-menu -->
+                        @endif
                     </nav><!-- End .mobile-cats-nav -->
                 </div><!-- .End .tab-pane -->
             </div><!-- End .tab-content -->

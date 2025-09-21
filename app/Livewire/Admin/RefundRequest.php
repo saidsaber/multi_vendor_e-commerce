@@ -19,13 +19,11 @@ class RefundRequest extends Component
     {
         $this->refunds = Refund_Request::with([
             'user',
-            'order',
+            'orderItem',
             'product_detail',
             'product_detail.images',
             'product_detail.product'
-        ])->wherehas('product_detail.product', function ($query) {
-            $query->where('store_id', Auth::guard('vendor')->user()->store->id);
-        })->where('status', '=', 'rejected')->get();
+        ])->where('status', '=', 'rejected')->get();
     }
     public function render()
     {

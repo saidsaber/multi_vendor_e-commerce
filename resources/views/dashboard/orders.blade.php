@@ -14,12 +14,6 @@
                     {{ ucfirst($order->payment_status) }}
                 </span>
             </div>
-            <div class="me-4">
-                <span class="fw-semibold text-muted">Status:</span>
-                <span class="fw-bold  text-secondary ">
-                    {{ ucfirst($order->status) }}
-                </span>
-            </div>
 
             <div>
                 <a href="{{ route('order', $order->id) }}" class="btn btn-link p-0">

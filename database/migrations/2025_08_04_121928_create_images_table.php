@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('product_detail_id')->constrained('product_details');
             $table->text('path');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
