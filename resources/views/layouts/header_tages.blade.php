@@ -53,8 +53,8 @@
 
         <footer class="footer">
             <div class="cta bg-image bg-dark pt-4 pb-5 mb-0"
-                style="background-image: url(assets/images/demos/demo-4/bg-5.jpg);">
-                <div class="container">
+                style="background-image: url(assets/images/demos/demo-4/bg-5.jpg);height:160px">
+                {{-- <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-sm-10 col-md-8 col-lg-6">
                             <div class="cta-heading text-center">
@@ -75,7 +75,7 @@
                             </form>
                         </div><!-- End .col-sm-10 col-md-8 col-lg-6 -->
                     </div><!-- End .row -->
-                </div><!-- End .container -->
+                </div><!-- End .container --> --}}
             </div><!-- End .cta -->
             <div class="footer-middle">
                 <div class="container">

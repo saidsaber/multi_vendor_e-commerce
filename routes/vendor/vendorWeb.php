@@ -53,6 +53,7 @@ Route::middleware(IsVendorMiddleWare::class)->group(function () {
         return view('vendor.refundRequest');
     })->name('refundRequest');
 
+
     Route::get('/vendor/logout', [UserController::class, 'logout'])->name('vendor.logout');
     Route::post('/create_product', [CreateProductController::class, 'createProduct'])->name('vendor.post.create.product');
 });

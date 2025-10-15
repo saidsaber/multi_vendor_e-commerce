@@ -1,4 +1,4 @@
-<div>
+<div style="display: {{ $display == 'block' ? 'none' : 'block' }}">
 
     <hr>
     @if (session()->has('success'))
@@ -32,7 +32,7 @@
                 @foreach ($products->product_details as $product)
                     {{-- @dd($product->images->first()->path) --}}
                     <tr class="row-danger">
-                        
+
                         <td><img src="{{ asset('storage/' . $product->images->first()->path) }}" alt=""></td>
                         <td>{{ $product->product->name }}</td>
                         <td>
@@ -70,4 +70,35 @@
             @endif
         </tbody>
     </table>
+</div>
+<div class="flex" style="display: {{ $display }}">
+    <div class="image-box text-center p-3 border rounded bg-white shadow-sm">
+        <h6 class="fw-bold mb-3">صور المنتج</h6>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <div class="position-relative">
+                <img src="images/product1.jpg" class="product-image border rounded"
+                    style="width:120px; height:120px; object-fit:cover;">
+                <button type="button"
+                    class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 translate-middle"
+                    style="width:24px; height:24px; line-height:0;" onclick="this.parentElement.remove()">×</button>
+            </div>
+
+            <div class="position-relative">
+                <img src="images/product2.jpg" class="product-image border rounded"
+                    style="width:120px; height:120px; object-fit:cover;">
+                <button type="button"
+                    class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 translate-middle"
+                    style="width:24px; height:24px; line-height:0;" onclick="this.parentElement.remove()">×</button>
+            </div>
+
+            <div class="position-relative">
+                <img src="images/product3.jpg" class="product-image border rounded"
+                    style="width:120px; height:120px; object-fit:cover;">
+                <button type="button"
+                    class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 translate-middle"
+                    style="width:24px; height:24px; line-height:0;" onclick="this.parentElement.remove()">×</button>
+            </div>
+        </div>
+    </div>
 </div>

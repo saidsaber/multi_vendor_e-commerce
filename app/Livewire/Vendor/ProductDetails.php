@@ -17,6 +17,7 @@ class ProductDetails extends Component
     use AuthorizesRequests;
     public $id;
     protected $listeners = ['productAdded' => 'ProductDetails'];
+    public $display = "none";
     public $products;
     public $image;
     public $product_detail_id;
@@ -30,7 +31,7 @@ class ProductDetails extends Component
             ]);
 
             session()->flash('success', 'Image uploaded successfully: ' . $path);
-        }else{
+        } else {
             session()->flash('error', 'please select file');
         }
         return;
@@ -38,7 +39,6 @@ class ProductDetails extends Component
 
     public function deleteProductDetail($id)
     {
-        // dd($id);
         $product = Product_Detail::with('images')->find($id);
         if ($product) {
             foreach ($product->images as $image) {
